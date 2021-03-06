@@ -10,8 +10,43 @@
 <body>
   <h1>XKCD Browser</h1>
   <div id="app">
-  </div>
+    <div v-if="loading">
+      <p>Loading...</p>
+    </div>
+    <div v-else>
+      <p>
+          <button v-on:click="firstComic">First</button>
+          <button v-on:click="previousComic">Previous</button>
+          <button v-on:click="nextComic">Next</button>
+          <button v-on:click="lastComic">Last</button>
+          <button v-on:click="randomComic">Random</button>
+      </p>
+      <h2>{{current.title}}</h2>
+      <img v-bind:src="current.img" v-bind:alt="current.alt">
+      <p>{{current.alt}}</p>
+      <p><i>#{{current.num}}, drawn on {{current.day}} {{month}} {{current.year}}</i></p>
+      <star-rating v-bind:increment="0.5" v-bind:show-rating="false" active-color="#ff5555" @rating-selected ="setRating"></star-rating>
+      <p>{{averageRating}}</p>
+      <h3>Add a Comment</h3>
+      <form v-on:submit.prevent="addComment">
+          <input v-model="addedName" placeholder="Name"></p>
+          <textarea v-model="addedComment"></textarea>
+          <br />
+          <button type="submit">Comment</button>
+      </form>
+      <h3>Comments</h3>
+      <div v-for="comment in comments[number]">
+          <hr>
+          <p>{{comment.text}}</p>
+          <p><i>-- {{comment.author}}</i></p>
+          <p class="small">{{comment.date}}</p>
+      </div>
+    </div>
+    <div class="footer">
+      <p>https://github.com/HeyImParker/vue-lab3</p>
+    </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-star-rating/dist/VueStarRating.umd.min.js"></script>`
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="/script.js"></script>
 </body>
